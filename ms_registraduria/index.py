@@ -143,6 +143,12 @@ def eliminarPartido(id):
     datos_salida=_controlador_partido.eliminarPartido(id)
     return jsonify(datos_salida)
 
+@app.route('/partidos/candidatos/<string:idPartido>',methods=['GET'])
+def listarCandidatoPartido (idPartido):    
+    datos_salida=_controlador_candidato.listarCandidatoPartido(idPartido)
+    return jsonify(datos_salida)
+
+
 ############################################################RESULTADOS###########################################################
 
 @app.route('/resultados',methods=['GET'])
@@ -172,15 +178,27 @@ def eliminarResultado(id):
     datos_salida=_controlador_resultado.eliminarResultado(id)
     return jsonify(datos_salida)
 
+####################################RELACIONES #################################
+
+@app.route("/candidatos/<string:idCandidato>/partidos/<string:idPartido>",methods=['PUT'])
+def asignarPartidoCandidato(idCandidato,idPartido):
+    datos_salida=_controlador_partido.asignarPartidoCandidato(idCandidato,idPartido)
+    return jsonify(datos_salida)
+
+@app.route("/mesasvotantes/<string:idMesaVotante>/resultados/<string:idResultado>",methods=['PUT'])
+def asignarMesaResultado(idMesaVotante,idResultado):
+    datos_salida=_controlador_resultado.asignarMesaResultado(idMesaVotante,idResultado)
+    return jsonify(datos_salida)
+
+@app.route("/candidatos/<string:idCandidato>/resultados/<string:idResultado>",methods=['PUT'])
+def asignarCandidatoResultado(idCandidato,idResultado):
+    datos_salida=_controlador_resultado.asignarCandidatoResultado(idCandidato,idResultado)
+    return jsonify(datos_salida)
+
 def loadFileConfig():
     with open('config.json') as f:
         data = json.load(f)
     return data
-
-#@app.route("/candidatos/<string:id>/partidos/<string:id_departamento>",methods=['PUT'])
-#def asignarDepartamentoAMateria(id,idPartido):
- #   json=miControladorCanPar.asignarPartidoCandidato(id,idPartido)
-  #  return jsonify(json)
 
 if __name__=='__main__':
     dataConfig = loadFileConfig()

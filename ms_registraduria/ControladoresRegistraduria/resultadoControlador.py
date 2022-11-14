@@ -1,11 +1,17 @@
 from Repositorios.resultadoRepositorio import ResultadoRepositorio
+from Repositorios.mesaVotanteRepositorio import MesaVotanteRepositorio
+from Repositorios.candidatoRepositorio import CandidatoRepositorio
 from ModelosRegistraduria.resultadoModelo import ResultadoModelo
+from ModelosRegistraduria.mesaVotanteModelo import MesaVotanteModelo
+from ModelosRegistraduria.candidatoModelo import CandidatoModelo
 
 class ResultadoControlador():
     
      def __init__(self):
         self.resultadoRepositorio = ResultadoRepositorio()
-     
+        self.mesaVotanteRepositorio = MesaVotanteRepositorio()
+        self.candidatoRepositorio = CandidatoRepositorio()
+
      def listarResultado(self):
         return self.resultadoRepositorio.findAll()
 
@@ -26,3 +32,15 @@ class ResultadoControlador():
 
      def eliminarResultado(self,id):
         return self.resultadoRepositorio.delete(id)
+
+     def asignarMesaResultado(self,idMesaVotante,idResultado):
+      mesaVotanteActual = MesaVotanteModelo(self.mesaVotanteRepositorio.findById(idMesaVotante))
+      resultadoActual=ResultadoModelo(self.resultadoRepositorio.findById(idResultado))
+      mesaVotanteActual.idResultado=resultadoActual
+      return self.mesaVotanteRepositorio.save(mesaVotanteActual)
+
+     def asignarCandidatoResultado(self,idCandidato,idResultado):
+      CandidatoActual = CandidatoModelo(self.candidatoRepositorio.findById(idCandidato))
+      resultadoActual=ResultadoModelo(self.resultadoRepositorio.findById(idResultado))
+      CandidatoActual.idResultado=resultadoActual
+      return self.candidatoRepositorio.save(CandidatoActual)
