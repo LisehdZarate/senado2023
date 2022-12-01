@@ -1,0 +1,9 @@
+{
+  "name": "frontendregistraduris",
+  "lockfileVersion": 2,
+  "requires": true,
+  "packages": {},
+  "dependencies": {
+    "@angular/cli": "^12.2.17"
+  }
+}
